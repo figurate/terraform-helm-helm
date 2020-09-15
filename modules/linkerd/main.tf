@@ -51,7 +51,7 @@ module "release" {
   name           = var.name
   repository_url = "https://helm.linkerd.io/stable"
   chart          = "linkerd/linkerd2"
-  config = {
+  env = {
     "global.identityTrustAnchorsPEM" = tls_self_signed_cert.trust_anchor.cert_pem
     "identity.issuer.crtExpiry"      = tls_locally_signed_cert.certificate.validity_end_time
     "identity.issuer.tls.crtPEM"     = tls_locally_signed_cert.certificate.cert_pem
