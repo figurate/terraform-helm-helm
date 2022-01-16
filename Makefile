@@ -10,8 +10,8 @@ clean:
 
 validate:
 	$(TERRAFORM) init && $(TERRAFORM) validate && \
-		$(TERRAFORM) init modules/linkerd && $(TERRAFORM) validate modules/linkerd && \
-		$(TERRAFORM) init modules/gatekeeper && $(TERRAFORM) validate modules/gatekeeper
+		$(TERRAFORM) -chdir=modules/linkerd init && $(TERRAFORM) -chdir=modules/linkerd validate && \
+		$(TERRAFORM) -chdir=modules/gatekeeper init && $(TERRAFORM) -chdir=modules/gatekeeper validate
 
 test: validate
 	$(CHECKOV) -d /work && \
