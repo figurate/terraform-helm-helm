@@ -11,9 +11,7 @@ clean:
 	rm -rf .terraform/
 
 validate:
-	$(TERRAFORM) init -upgrade && $(TERRAFORM) validate && \
-		$(TERRAFORM) -chdir=modules/linkerd init -upgrade && $(TERRAFORM) -chdir=modules/linkerd validate && \
-		$(TERRAFORM) -chdir=modules/gatekeeper init -upgrade && $(TERRAFORM) -chdir=modules/gatekeeper validate
+	$(TERRAFORM) init  && $(TERRAFORM) validate
 
 test: validate
 	$(CHECKOV) -d /work
@@ -28,9 +26,7 @@ docs: diagram
 		$(TERRAFORM_DOCS) markdown ./modules/gatekeeper >./modules/gatekeeper/README.md
 
 format:
-	$(TERRAFORM) fmt -list=true ./ && \
-		$(TERRAFORM) fmt -list=true ./modules/linkerd && \
-		$(TERRAFORM) fmt -list=true ./modules/gatekeeper
+	$(TERRAFORM) fmt -list=true -recursive
 
 release: test
 	git tag $(VERSION) && git push --tags
